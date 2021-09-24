@@ -1,11 +1,10 @@
 ﻿using CovidCases.API.Models;
 using CovidCases.Contract;
 using CovidCases.Contract.ViewModels;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +23,7 @@ namespace CovidCases.API.Controllers
         }
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult>RegisterUser(UsersViewModel viewModel)
+        public async Task<IActionResult>RegisterUser(UserInputViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -53,5 +52,47 @@ namespace CovidCases.API.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetUser()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var userId = this.User.FindFirst("Id").Value;
+            var result = await _usersService.GetAsync(o => o.Id == Convert.ToInt32(userId));
+            var CurrentUser =  result.Select(i => new { i.Email, i.FirstName,i.LastName,i.Id }).ToList();
+            return Ok(CurrentUser);
+        }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> UpdateUser(UsersViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var userId = this.User.FindFirst("Id").Value;
+            var result = await _usersService.UpdateUserAsync(Convert.ToInt32(userId),viewModel);    
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> DeleteUser()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var userId = this.User.FindFirst("Id").Value;
+            var result = await _usersService.DeleteUserAsync(Convert.ToInt32(userId));
+            return StatusCode(result.StatusCode, result);
+        }
+
     }
 }

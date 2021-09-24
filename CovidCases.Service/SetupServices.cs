@@ -13,6 +13,7 @@ namespace CovidCases.Service
         {
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<ICovidService, CovidService>();
             return services;
         }
 

@@ -15,5 +15,7 @@ namespace CovidCases.Data.Repositories
 
         Task<TEntity> UpdateAsync(TEntity entity);
         Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,  CancellationToken cancellationToken = default);
+
+        Task<bool> DeleteAsync(TEntity entity);
     }
 }

@@ -90,5 +90,24 @@ namespace CovidCases.Data.Repositories
                 throw new Exception($"Couldn't retrieve entities: {ex.Message}");
             }
         }
+
+        public async Task<bool> DeleteAsync(TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
+            }
+
+            try
+            {
+                appDBContext.Remove(entity);
+                await appDBContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(entity)} could not be deleted: {ex.Message}");
+            }
+        }
     }
 }
