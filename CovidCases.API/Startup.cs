@@ -35,8 +35,10 @@ namespace CovidCases.API
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.TokenSecret);
 
+            // Database connection string
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBConnection"),
                 b => b.MigrationsAssembly("CovidCases.API")));
+            
             //DI references
             services.RegisterServices();
 

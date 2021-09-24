@@ -4,6 +4,9 @@ using System.Text;
 
 namespace CovidCases.Contract.ViewModels
 {
+    /// <summary>
+    /// Response View Model used for responses
+    /// </summary>
     public class ResponseViewModel
     {
         public bool Succeeded { get; set; }

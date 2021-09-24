@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using Claim = System.Security.Claims.Claim;
 namespace CovidCases.API.Security
 {
+    /// <summary>
+    /// Token Genertaion
+    /// </summary>
     public class JwtGenerator
     {
         private readonly AppSettings _appSettings;
@@ -21,7 +24,9 @@ namespace CovidCases.API.Security
             _appSettings = appSettings;
         }
 
-
+        /// <summary>
+        /// Generate the token for the user
+        /// </summary>
         public object GenerateToken(dynamic user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

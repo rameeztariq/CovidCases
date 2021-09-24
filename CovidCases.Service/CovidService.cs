@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 namespace CovidCases.Service
 {
     public class CovidService : ICovidService
-    {
+    {   
+        /// <summary>
+        /// Get Covid Summary from the API
+        /// </summary>
         public async Task<ResponseViewModel> GetCovidSummary()
         {
             ResponseViewModel response = new ResponseViewModel();
@@ -30,6 +33,10 @@ namespace CovidCases.Service
                 return response;
             }
         }
+
+        /// <summary>
+        /// Get UAE History from the covid API
+        /// </summary>
         public async Task<ResponseViewModel> GetUAEHistory()
         {
             ResponseViewModel response = new ResponseViewModel();
@@ -50,6 +57,10 @@ namespace CovidCases.Service
                 return response;
             }
         }
+       
+        /// <summary>
+        /// Returns API response
+        /// </summary>
         private async Task<string> GetResponse(string url)
         {
             try
